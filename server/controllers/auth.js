@@ -1,4 +1,5 @@
 const UserModel = require("../models/users");
+const crypto = require("crypto");
 
 exports.createNewUser = async (req, res) => {
   const { email, password, name } = req.body;
