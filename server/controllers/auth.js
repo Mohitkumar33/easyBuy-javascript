@@ -1,5 +1,6 @@
 const UserModel = require("../models/users");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
 const VerificationToken = require("../models/verificationTokens");
 
 exports.createNewUser = async (req, res) => {
