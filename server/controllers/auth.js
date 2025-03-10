@@ -2,22 +2,22 @@ const UserModel = require("../models/users");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const VerificationToken = require("../models/verificationTokens");
+const { sendErrorResponse } = require("../utils/responseHandler"); // Import the helper function
+
 
 exports.createNewUser = async (req, res) => {
   try {
     const { email, password, name } = req.body;
 
-    if (!name) return res.status(422).json({ message: "Name is missing" });
-    if (!name) return res.status(422).json({ message: "Email is missing" });
+    if (!name) return sendErrorResponse(res, 422, "Name is missing");
+    if (!name) return sendErrorResponse(res, 422, "Email is missing");
     if (!password)
-      return res.status(422).json({ message: "Password is missing" });
+      return sendErrorResponse(res, 422, "Password is missing");
 
     const existingUser = await UserModel.findOne({ email });
 
     if (existingUser)
-      return res
-        .status(401)
-        .json({ message: "Unauthorized request, email is already in use!" });
+      return sendErrorResponse(res, 401, "Unauthorized request, email is already in use!");
 
     //new user
     const newUser = await UserModel.create({ name, email, password });
@@ -33,9 +33,8 @@ exports.createNewUser = async (req, res) => {
         message: "User created successfully! Verification token generated.",
       });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+    sendErrorResponse(res, 500, "Internal Server Error");
+
   }
   // res.send("ok");
 };

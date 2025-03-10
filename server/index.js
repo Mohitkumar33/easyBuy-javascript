@@ -3,7 +3,7 @@ const authRouter = require("./routes/auth");
 const connectDB = require("./db/index");
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // Connect to MongoDB
 connectDB();
