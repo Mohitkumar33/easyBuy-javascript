@@ -2,8 +2,10 @@ const express = require("express");
 const authRouter = require("./routes/auth");
 const connectDB = require("./db/index");
 
+const config = require("./config"); // Import config
+
 const app = express();
-const port = 4000;
+const port = config.port;
 
 // Connect to MongoDB
 connectDB();

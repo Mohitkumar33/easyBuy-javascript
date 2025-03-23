@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const VerificationToken = require("../models/verificationTokens");
 const { sendErrorResponse } = require("../utils/responseHandler"); // Import the helper function
+const { sendEmail } = require("../services/emailService");
 
 
 exports.createNewUser = async (req, res) => {
@@ -22,11 +23,13 @@ exports.createNewUser = async (req, res) => {
     //new user
     const newUser = await UserModel.create({ name, email, password });
 
-    // Generate a random verification token
-    const token = crypto.randomBytes(32).toString("hex");
+    sendEmail("mohitkumar06612@gmail.com","Testing","Hello world")
 
-    // Store token in the VerificationToken model
-    await VerificationToken.create({ owner: newUser._id, token });
+    // // Generate a random verification token
+    // const token = crypto.randomBytes(32).toString("hex");
+
+    // // Store token in the VerificationToken model
+    // await VerificationToken.create({ owner: newUser._id, token });
     res
       .status(201)
       .json({
